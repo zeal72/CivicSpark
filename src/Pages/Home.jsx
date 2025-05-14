@@ -3,11 +3,12 @@ import SidePanel from './Sidebar';
 import FeedPanel from './Feed';
 import RightPanel from './YouMightLike';
 import ChatBot from './Chatbot';
-// import { Sidebar } from './../../node_modules/framer-motion/dist/framer-motion.dev';
+import { MessageCircle } from 'lucide-react';
 
 const MainLayout = () => {
 	const [isMobile, setIsMobile] = useState(false);
 	const [showMenu, setShowMenu] = useState(false);
+	const [showChatBot, setShowChatBot] = useState(false);
 
 	// Check if the screen is mobile
 	useEffect(() => {
@@ -30,6 +31,10 @@ const MainLayout = () => {
 	// Toggle menu in mobile view
 	const toggleMenu = () => {
 		setShowMenu(!showMenu);
+	};
+
+	const toggleChatBot = () => {
+		setShowChatBot(!showChatBot);
 	};
 
 	return (
@@ -82,8 +87,20 @@ const MainLayout = () => {
 					</div>
 				)}
 
-				{/* Chat Bot - Always visible */}
-				<ChatBot />
+				{/* Chat Bot Toggle Button */}
+				<button
+					onClick={toggleChatBot}
+					className="fixed bottom-6 right-6 cursor-pointer z-40 bg-green-600 text-white p-3 rounded-full shadow-lg hover:bg-green-700"
+				>
+					<MessageCircle className="w-7 h-7" />
+				</button>
+
+				{/* Chat Bot Panel */}
+				{showChatBot && (
+					<div className="fixed bottom-0 right-0 z-50">
+						<ChatBot />
+					</div>
+				)}
 			</div>
 		</div>
 	);
