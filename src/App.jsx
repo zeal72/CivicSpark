@@ -1,11 +1,11 @@
 
 import './App.css'
-import Home from './Pages/Home'
+import MainLayout from './Pages/Home'
 function App() {
 
   return (
     <>
-      <Home />
+      <MainLayout />
     </>
   )
 }
