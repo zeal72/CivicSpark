@@ -1,11 +1,11 @@
 
 import './App.css'
-import Home from './Pages/Home'
+import Chatbot from './Pages/Chatbot'
 function App() {
 
   return (
     <>
-      <Home />
+      <Chatbot />
     </>
   )
 }
