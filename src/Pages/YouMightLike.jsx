@@ -1,5 +1,9 @@
-import React from 'react';
-
+// import React from 'react';
+import Magic from '../assets/magicfm.png'
+import Mutual1 from '../assets/Mutuals1.png'
+import Mutual2 from '../assets/Mutuals2.png'
+import Mutual3 from '../assets/Mutuals3.png'
+import Rad5 from '../assets/Rad5.png'
 const RightPanel = () => {
 	return (
 		<div className="w-80 bg-white h-screen border-l border-gray-200 overflow-y-auto">
@@ -16,14 +20,15 @@ const RightPanel = () => {
 					<div className="flex items-center justify-between">
 						<div className="flex items-center">
 							<div className="w-10 h-10 rounded-full overflow-hidden mr-2 bg-red-100 flex-shrink-0">
-								<img src="/api/placeholder/40/40" alt="Magic FM" className="w-full h-full object-cover" />
+								<img src={Magic} alt="Magic FM" className="w-full h-full object-cover" />
 							</div>
 							<div>
 								<h4 className="font-medium text-sm">Magic FM</h4>
 								<div className="flex items-center">
 									<div className="flex -space-x-1">
-										<img src="/api/placeholder/16/16" alt="User" className="w-4 h-4 rounded-full border border-white" />
-										<img src="/api/placeholder/16/16" alt="User" className="w-4 h-4 rounded-full border border-white" />
+										<img src={Mutual1} alt="User" className="w-4 h-4 rounded-full border border-white" />
+										<img src={Mutual2} alt="User" className="w-4 h-4 rounded-full border border-white" />
+										<img src={Mutual3} alt="User" className="w-4 h-4 rounded-full border border-white" />
 									</div>
 									<span className="text-xs text-gray-500 ml-1">45 Mutuals</span>
 								</div>
@@ -37,18 +42,6 @@ const RightPanel = () => {
 				</div>
 			</div>
 
-			{/* Civic Spark Logo */}
-			<div className="p-4 bg-white flex justify-center">
-				<div className="text-center">
-					<img src="/api/placeholder/100/100" alt="Abia State Coat of Arms" className="w-16 h-16 mx-auto mb-2" />
-					<div className="font-bold text-xl">
-						<span className="text-yellow-500">CIVIC</span>
-						<span className="text-red-700"> SPARK</span>
-					</div>
-					<div className="text-gray-500 font-medium text-sm">CHATBOT</div>
-				</div>
-			</div>
-
 			{/* Upcoming Events */}
 			<div className="p-4 border-t border-b border-gray-100">
 				<div className="flex justify-between items-center mb-3">
@@ -57,51 +50,55 @@ const RightPanel = () => {
 				</div>
 
 				{/* Event Card 1 */}
-				<div className="bg-white rounded-lg shadow-sm border border-gray-100 mb-3">
-					<div className="flex p-2">
-						<div className="bg-blue-500 rounded-lg w-14 h-14 flex items-center justify-center text-white mr-2 flex-shrink-0">
-							<div className="text-center">
-								<div className="text-xs">ABS</div>
-								<div className="font-bold">TECH HUB</div>
-								<div className="text-xs">13 MAY 2025</div>
-							</div>
+				<div className="bg-[#AA1F2E]  rounded-xl text-white shadow-sm border border-gray-200 mb-4 p-3 sm:p-4">
+					<div className="flex items-start gap-3">
+						<div className="w-14 h-14 rounded-lg overflow-hidden flex-shrink-0">
+							<img src={Rad5} alt="Rad5 Logo" className="w-full h-full object-cover" />
 						</div>
-						<div className="flex-1">
-							<h4 className="font-medium text-sm">Launch Your Career Or Grow Your Business With Social Media.</h4>
-							<div className="flex justify-between items-center mt-1">
-								<div className="flex items-center">
-									<div className="flex -space-x-1">
-										<img src="/api/placeholder/16/16" alt="User" className="w-4 h-4 rounded-full border border-white" />
-										<img src="/api/placeholder/16/16" alt="User" className="w-4 h-4 rounded-full border border-white" />
-									</div>
-								</div>
-								<span className="text-xs text-red-500">182 Joined</span>
+						<div>
+							<p className="text-sm sm:text-base font-medium">Rad5 Tech Hub</p>
+							<p className="text-xs sm:text-sm text-gray-200">14 MAY 2025</p>
+						</div>
+					</div>
+
+					<div className="mt-3">
+						<h4 className="text-sm sm:text-base font-semibold leading-snug">
+							Launch Your Career Or Grow Your Business With Social Media.
+						</h4>
+
+						<div className="flex justify-between items-center mt-3 pt-2 border-t border-white/20">
+							<div className="flex -space-x-2">
+								<img src={Mutual1} alt="User 1" className="w-5 h-5 sm:w-6 sm:h-6 rounded-full border border-white" />
+								<img src={Mutual2} alt="User 2" className="w-5 h-5 sm:w-6 sm:h-6 rounded-full border border-white" />
 							</div>
+							<span className="text-xs sm:text-sm text-white/90">182 Joined</span>
 						</div>
 					</div>
 				</div>
 
 				{/* Event Card 2 */}
-				<div className="bg-white rounded-lg shadow-sm border border-gray-100">
-					<div className="flex p-2">
-						<div className="bg-blue-500 rounded-lg w-14 h-14 flex items-center justify-center text-white mr-2 flex-shrink-0">
-							<div className="text-center">
-								<div className="text-xs">ABS</div>
-								<div className="font-bold">TECH HUB</div>
-								<div className="text-xs">13 MAY 2025</div>
-							</div>
+				<div className="bg-[#09B264]  rounded-xl text-white shadow-sm border border-gray-200 mb-4 p-3 sm:p-4">
+					<div className="flex items-start gap-3">
+						<div className="w-14 h-14 rounded-lg overflow-hidden flex-shrink-0">
+							<img src={Rad5} alt="Rad5 Logo" className="w-full h-full object-cover" />
 						</div>
-						<div className="flex-1">
-							<h4 className="font-medium text-sm">Launch Your Career Or Grow Your Business With Social Media.</h4>
-							<div className="flex justify-between items-center mt-1">
-								<div className="flex items-center">
-									<div className="flex -space-x-1">
-										<img src="/api/placeholder/16/16" alt="User" className="w-4 h-4 rounded-full border border-white" />
-										<img src="/api/placeholder/16/16" alt="User" className="w-4 h-4 rounded-full border border-white" />
-									</div>
-								</div>
-								<span className="text-xs text-red-500">183 Joined</span>
+						<div>
+							<p className="text-sm sm:text-base font-medium">Rad5 Tech Hub</p>
+							<p className="text-xs sm:text-sm text-gray-200">14 MAY 2025</p>
+						</div>
+					</div>
+
+					<div className="mt-3">
+						<h4 className="text-sm sm:text-base font-semibold leading-snug">
+							Launch Your Career Or Grow Your Business With Social Media.
+						</h4>
+
+						<div className="flex justify-between items-center mt-3 pt-2 border-t border-white/20">
+							<div className="flex -space-x-2">
+								<img src={Mutual1} alt="User 1" className="w-5 h-5 sm:w-6 sm:h-6 rounded-full border border-white" />
+								<img src={Mutual2} alt="User 2" className="w-5 h-5 sm:w-6 sm:h-6 rounded-full border border-white" />
 							</div>
+							<span className="text-xs sm:text-sm text-white/90">182 Joined</span>
 						</div>
 					</div>
 				</div>

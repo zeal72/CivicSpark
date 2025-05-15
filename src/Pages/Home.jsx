@@ -4,104 +4,174 @@ import FeedPanel from './Feed';
 import RightPanel from './YouMightLike';
 import ChatBot from './Chatbot';
 import { MessageCircle } from 'lucide-react';
+import Logo from '../assets/FullLogo.png'
+import Link from '../assets/Link.png'
+import Percentage from '../assets/percentage.png'
+import IdeaBox from './IdeaBox';
+import Groups from './Groups';
+import Favourite from './Favourite';
+import Settings from './Settings';
+import Abiamap from './Abiamap';
 
 const MainLayout = () => {
 	const [isMobile, setIsMobile] = useState(false);
-	const [showMenu, setShowMenu] = useState(false);
+	const [showSidebar, setShowSidebar] = useState(false);
+	const [showRightPanel, setShowRightPanel] = useState(false);
 	const [showChatBot, setShowChatBot] = useState(false);
+	const [activeTab, setActiveTab] = useState('feed');
 
-	// Check if the screen is mobile
 	useEffect(() => {
-		const checkIfMobile = () => {
-			setIsMobile(window.innerWidth < 768);
+		const handleResize = () => {
+			const mobile = window.innerWidth < 1024;
+			setIsMobile(mobile);
+			setShowSidebar(!mobile);
+			setShowRightPanel(!mobile);
 		};
-
-		// Initial check
-		checkIfMobile();
-
-		// Add resize listener
-		window.addEventListener('resize', checkIfMobile);
-
-		// Clean up
-		return () => {
-			window.removeEventListener('resize', checkIfMobile);
-		};
+		handleResize();
+		window.addEventListener('resize', handleResize);
+		return () => window.removeEventListener('resize', handleResize);
 	}, []);
 
-	// Toggle menu in mobile view
-	const toggleMenu = () => {
-		setShowMenu(!showMenu);
+	const toggleSidebar = () => {
+		setShowSidebar((prev) => !prev);
+		if (isMobile) setShowRightPanel(false);
 	};
 
-	const toggleChatBot = () => {
-		setShowChatBot(!showChatBot);
+	const toggleRightPanel = () => {
+		setShowRightPanel((prev) => !prev);
+		if (isMobile) setShowSidebar(false);
+	};
+
+	const toggleChatBot = () => setShowChatBot((prev) => !prev);
+
+	const handleNavItemClick = (tab) => {
+		setActiveTab(tab);
+		if (isMobile) setShowSidebar(false);
 	};
 
 	return (
-		<div>
-			<header className='bg-white shadow-md w-full h-16 flex items-center justify-around px-4'>
-				<div>
-					Image Logo
+		<div className="flex flex-col h-screen overflow-hidden">
+			{/* Header */}
+			<header className="fixed top-0 left-0 right-0 h-16 bg-white shadow-md z-30 flex items-center justify-between px-4 md:px-8">
+				<div className="flex items-center space-x-3">
+					{isMobile && (
+						<button onClick={toggleSidebar} className="mr-2 p-1">
+							{showSidebar ? (
+								<svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+									<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+								</svg>
+							) : (
+								<svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+									<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+								</svg>
+							)}
+						</button>
+					)}
+					{/* Logo */}
+					<img src={Logo} alt="Logo" className="h-10 w-auto" />
+
 				</div>
-				<div className='flex gap-4'>
-					<div className='bg-green-600 h-10 w-20 rounded-sm'></div>
-					<div className='bg-green-600 h-10 w-20 rounded-sm'></div>
+
+				<div className="flex items-center gap-2 sm:gap-4">
+					<a
+						href="https://www.abia.tax/"
+						className=" hidden lg:flex items-center gap-2 px-3 sm:px-4 py-2 text-white text-sm sm:text-base bg-[#09B264] rounded-md hover:opacity-90 transition"
+					>
+						<img
+							src={Percentage}
+							alt="Percentage Icon"
+							className="h-5 sm:h-6 w-auto object-contain shrink-0"
+						/>
+						<span className="whitespace-nowrap">Abia Tax Registration And Information</span>
+					</a>
+
+					<a
+						href="https://abiastate.gov.ng/mdas/"
+						className="hidden lg:flex items-center gap-2 px-3 sm:px-4 py-2 text-white text-sm sm:text-base bg-[#09B264] rounded-md hover:opacity-90 transition"
+					>
+						<img
+							src={Link}
+							alt="Link icon"
+							className="h-5 sm:h-6 w-auto object-contain shrink-0"
+						/>
+						<span className="whitespace-nowrap">Contacts Of Ministry & Department In Abia State.</span>
+					</a>
+
+					{isMobile && (
+						<button onClick={toggleRightPanel} className="ml-4 p-1">
+							{showRightPanel ? (
+								<svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+									<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+								</svg>
+							) : (
+								<svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+									<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+								</svg>
+							)}
+						</button>
+					)}
 				</div>
 			</header>
-			<div className="flex h-screen bg-gray-100 overflow-hidden">
 
-				{/* Mobile Menu Button */}
-				{isMobile && (
-					<button
-						onClick={toggleMenu}
-						className="fixed top-4 right-4 z-50 bg-white p-2 rounded-md shadow-md"
-					>
-						{showMenu ? (
-							<svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-								<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-							</svg>
-						) : (
-							<svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-								<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-							</svg>
-						)}
-					</button>
-				)}
 
-				{/* Left Panel */}
-				{(!isMobile || (isMobile && showMenu)) && (
-					<div className={`${isMobile ? 'fixed top-0 left-0 z-40 h-full shadow-lg' : ''}`}>
-						<SidePanel />
-					</div>
-				)}
-
-				{/* Middle Panel */}
-				<div className="flex-1 h-screen overflow-y-auto">
-					<FeedPanel />
+			{/* Main Layout */}
+			<div className="flex flex-1 mt-16 h-[calc(100vh-4rem)] overflow-hidden relative">
+				{/* Sidebar */}
+				<div className={`
+					${isMobile
+						? `${showSidebar ? 'translate-x-0' : '-translate-x-full'} fixed top-16 left-0 bottom-0 z-30 w-60 bg-white transition-transform duration-300 ease-in-out`
+						: 'hidden md:block w-60 border-r border-gray-200'
+					}`}>
+					<SidePanel onNavItemClick={handleNavItemClick} activeTab={activeTab} />
 				</div>
 
+				{/* Feed Panel (Scrollable) */}
+				<div className="flex-1 bg-white overflow-y-auto">
+					{activeTab === 'feed' && <FeedPanel />}
+					{activeTab === 'ideabox' && <IdeaBox />}
+					{activeTab === 'favourite' && <Favourite />}
+					{activeTab === 'groups' && <Groups />}
+					{activeTab === 'settings' && <Settings />}
+					{activeTab === 'abiamap' && < Abiamap />}
+					{/* Add more conditions for other tabs */}
+				</div>
+
+
 				{/* Right Panel */}
-				{(!isMobile || (isMobile && showMenu)) && (
-					<div className={`${isMobile ? 'fixed top-0 right-0 z-40 h-full shadow-lg' : ''}`}>
-						<RightPanel />
-					</div>
-				)}
+				<div className={`
+					${isMobile
+						? `${showRightPanel ? 'translate-x-0' : 'translate-x-full'} fixed top-16 right-0 bottom-0 z-30 w-80 bg-white transition-transform duration-300 ease-in-out`
+						: 'hidden md:block w-80 border-l border-gray-200'
+					}`}>
+					<RightPanel />
+				</div>
 
-				{/* Chat Bot Toggle Button */}
-				<button
-					onClick={toggleChatBot}
-					className="fixed bottom-6 right-6 cursor-pointer z-40 bg-green-600 text-white p-3 rounded-full shadow-lg hover:bg-green-700"
-				>
-					<MessageCircle className="w-7 h-7" />
-				</button>
-
-				{/* Chat Bot Panel */}
-				{showChatBot && (
-					<div className="fixed bottom-0 right-0 z-50">
-						<ChatBot />
-					</div>
+				{/* Overlay for mobile panels */}
+				{isMobile && (showSidebar || showRightPanel) && (
+					<div
+						className="fixed inset-0 bg-black bg-opacity-50 z-20"
+						onClick={() => {
+							setShowSidebar(false);
+							setShowRightPanel(false);
+						}}
+					></div>
 				)}
 			</div>
+
+			{/* Chat Bot Toggle Button */}
+			<button
+				onClick={toggleChatBot}
+				className="fixed bottom-6 right-6 z-40 bg-green-600 text-white p-3 rounded-full shadow-lg hover:bg-green-700"
+			>
+				<MessageCircle className="w-7 h-7" />
+			</button>
+
+			{/* Chat Bot Panel */}
+			{showChatBot && (
+				<div className="fixed bottom-0 right-0 z-50">
+					<ChatBot onClose={() => setShowChatBot(false)} />
+				</div>
+			)}
 		</div>
 	);
 };
