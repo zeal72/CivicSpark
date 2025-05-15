@@ -4,14 +4,15 @@ import FeedPanel from './Feed';
 import RightPanel from './YouMightLike';
 import ChatBot from './Chatbot';
 import { MessageCircle } from 'lucide-react';
-import Logo from '../assets/FullLogo.png'
-import Link from '../assets/Link.png'
-import Percentage from '../assets/percentage.png'
+import Logo from '../assets/FullLogo.png';
+import Link from '../assets/Link.png';
+import Percentage from '../assets/percentage.png';
 import IdeaBox from './IdeaBox';
 import Groups from './Groups';
 import Favourite from './Favourite';
 import Settings from './Settings';
 import Abiamap from './Abiamap';
+import CivicSparkLoader from '../Components/Loader';
 
 const MainLayout = () => {
 	const [isMobile, setIsMobile] = useState(false);
@@ -19,6 +20,8 @@ const MainLayout = () => {
 	const [showRightPanel, setShowRightPanel] = useState(false);
 	const [showChatBot, setShowChatBot] = useState(false);
 	const [activeTab, setActiveTab] = useState('feed');
+	const [loading, setLoading] = useState(false);
+	const [loadingMessage, setLoadingMessage] = useState('');
 
 	useEffect(() => {
 		const handleResize = () => {
@@ -45,8 +48,28 @@ const MainLayout = () => {
 	const toggleChatBot = () => setShowChatBot((prev) => !prev);
 
 	const handleNavItemClick = (tab) => {
-		setActiveTab(tab);
-		if (isMobile) setShowSidebar(false);
+		if (tab === activeTab) return; // Don't reload if same tab
+
+		// Create friendly names for tabs
+		const tabNames = {
+			feed: 'Feed',
+			ideabox: 'Idea Box',
+			map: 'Abia State Map',
+			groups: 'Groups',
+			favorites: 'My Favorites',
+			settings: 'Settings'
+		};
+
+		// Set loading message "Switching to [Tab Name]..."
+		setLoadingMessage(`Switching to ${tabNames[tab] || tab}...`);
+		setLoading(true);
+
+		// Show loader for 2 seconds
+		setTimeout(() => {
+			setActiveTab(tab);
+			setLoading(false);
+			if (isMobile) setShowSidebar(false);
+		}, 2000);
 	};
 
 	return (
@@ -69,7 +92,6 @@ const MainLayout = () => {
 					)}
 					{/* Logo */}
 					<img src={Logo} alt="Logo" className="h-10 w-auto" />
-
 				</div>
 
 				<div className="flex items-center gap-2 sm:gap-4">
@@ -127,13 +149,20 @@ const MainLayout = () => {
 
 				{/* Feed Panel (Scrollable) */}
 				<div className="flex-1 bg-white overflow-y-auto">
-					{activeTab === 'feed' && <FeedPanel />}
-					{activeTab === 'ideabox' && <IdeaBox />}
-					{activeTab === 'favourite' && <Favourite />}
-					{activeTab === 'groups' && <Groups />}
-					{activeTab === 'settings' && <Settings />}
-					{activeTab === 'settings' && < Abiamap />}
-					{/* Add more conditions for other tabs */}
+					{loading ? (
+						<div className="h-full flex items-center justify-center">
+							<CivicSparkLoader fullscreen={false} message={loadingMessage} />
+						</div>
+					) : (
+						<>
+							{activeTab === 'feed' && <FeedPanel />}
+							{activeTab === 'ideabox' && <IdeaBox />}
+							{activeTab === 'map' && <Abiamap />}
+							{activeTab === 'groups' && <Groups />}
+							{activeTab === 'favorites' && <Favourite />}
+							{activeTab === 'settings' && <Settings />}
+						</>
+					)}
 				</div>
 
 

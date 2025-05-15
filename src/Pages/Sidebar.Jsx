@@ -1,7 +1,18 @@
-import React from 'react';
-
+// import React from 'react';
+import PropTypes from 'prop-types';
 const SidePanel = ({ onNavItemClick, activeTab }) => {
 	// Navigation items with their icons and labels
+	SidePanel.propTypes = {
+		/**
+		 * Callback function invoked when navigation item is clicked
+		 */
+		onNavItemClick: PropTypes.func.isRequired,
+
+		/**
+		 * Currently active tab identifier
+		 */
+		activeTab: PropTypes.string.isRequired
+	};
 	const navItems = [
 		{
 			id: 'feed',

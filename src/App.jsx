@@ -1,22 +1,34 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import './App.css'
-
-import MainLayout from './Pages/Home'
-import Favourite from './Pages/Favourite'
-import IdeaBox from './Pages/IdeaBox'
-import Settings from './Pages/Settings'
-import Groups from './Pages/Groups'
-import SidePanel from './Pages/Sidebar'
-import Abiamap from './Pages/Abiamap'
-import FeedPanel from './Pages/Feed'
-import CivicSparkChatbot from './Pages/Chatbot'
-import LandingPage from './Pages/LandingPage'
+import { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import './App.css';
+import CivicSparkLoader from './Components/Loader';
+import MainLayout from './Pages/Home';
+import Favourite from './Pages/Favourite';
+import IdeaBox from './Pages/IdeaBox';
+import Settings from './Pages/Settings';
+import Groups from './Pages/Groups';
+import SidePanel from './Pages/Sidebar';
+import Abiamap from './Pages/Abiamap';
+import FeedPanel from './Pages/Feed';
+import CivicSparkChatbot from './Pages/Chatbot';
+import LandingPage from './Pages/LandingPage';
 
 function App() {
-  return (
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  return isLoading ? (
+    <CivicSparkLoader />
+  ) : (
     <Router>
       <Routes>
-        <Route path="/" element={< MainLayout />} />
+        <Route path="/" element={<MainLayout />} />
         <Route path="/home" element={<MainLayout />} />
         <Route path="/favourite" element={<Favourite />} />
         <Route path="/ideabox" element={<IdeaBox />} />
@@ -29,7 +41,7 @@ function App() {
         <Route path="/chatbot" element={<CivicSparkChatbot />} />
       </Routes>
     </Router>
-  )
+  );
 }
 
-export default App
+export default App;
