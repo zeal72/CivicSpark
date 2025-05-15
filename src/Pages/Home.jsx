@@ -98,7 +98,7 @@ const MainLayout = () => {
 				{/* Chat Bot Panel */}
 				{showChatBot && (
 					<div className="fixed bottom-0 right-0 z-50">
-						<ChatBot />
+						<ChatBot onClose={toggleChatBot} />
 					</div>
 				)}
 			</div>

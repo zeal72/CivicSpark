@@ -1,10 +1,9 @@
 import { X, Send, Mic, Plus } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import logo from "../assets/logo.png";
 import logo2 from "../assets/logoname.png";
 
-export default function CivicSparkChatbot() {
-  const [isOpen, setIsOpen] = useState(true);
+export default function CivicSparkChatbot({onClose}) {
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState([
     {
@@ -14,6 +13,7 @@ export default function CivicSparkChatbot() {
       timestamp: new Date().toLocaleTimeString(),
     },
   ]);
+	
   const [isTyping, setIsTyping] = useState(false);
 
   const handleSend = () => {
@@ -21,7 +21,7 @@ export default function CivicSparkChatbot() {
     if (!trimmed) return;
 
     const userMsg = {
-      sender: "user",
+			sender: "user",
       content: trimmed,
       timestamp: new Date().toLocaleTimeString(),
     };
@@ -41,14 +41,20 @@ export default function CivicSparkChatbot() {
       setIsTyping(false);
     }, 1500);
   };
-
-  if (!isOpen) return null;
-
+	
+	const messagesEndRef = useRef(null);
+	const scrollToBottom = () => {
+		messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+	};
+	useEffect(() => {
+		scrollToBottom();
+	}, [messages, isTyping]);
+	
   return (
     <div className="h-screen w-[340px] shadow-lg bg-white flex flex-col justify-between overflow-hidden fixed right-0 top-0 z-50">
       {/* Topbar */}
       <div className="absolute top-1 right-1 z-50 bg-[#09B264] rounded-lg p-1">
-        <button onClick={() => setIsOpen(false)}>
+        <button onClick={onClose}>
           <X className="w-7 text-white cursor-pointer" />
         </button>
       </div>
@@ -75,7 +81,7 @@ export default function CivicSparkChatbot() {
               <div
                 className={`text-sm p-2 rounded-md max-w-[80%] ${
                   msg.sender === "user"
-                    ? "bg-lime-700 text-white"
+                    ? "bg-gray-200 text-black"
                     : "bg-[#09B264] text-white"
                 }`}
               >
@@ -94,6 +100,9 @@ export default function CivicSparkChatbot() {
               <span>Civic Bot is typing...</span>
             </div>
           )}
+
+					<div ref={messagesEndRef} />
+
         </div>
       </div>
 
