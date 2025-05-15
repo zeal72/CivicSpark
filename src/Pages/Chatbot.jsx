@@ -40,7 +40,7 @@ export default function CivicSparkChatbot({onClose}) {
 					"X-Title": "CivicSpark ChatBot", // Optional
 				},
 				body: JSON.stringify({
-					model: "deepseek/deepseek-prover-v2:free", // Or any model OpenRouter supports
+					model: "meta-llama/llama-3.3-70b-instruct:free", // Or any model OpenRouter supports
 					messages: [
 						{
 							role: "system",
