@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import SidePanel from './Sidebar';
+import SidePanel from './SidePanel';
 import FeedPanel from './Feed';
 import RightPanel from './YouMightLike';
 import ChatBot from './Chatbot';

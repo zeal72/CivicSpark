@@ -7,7 +7,7 @@ import Favourite from './Pages/Favourite';
 import IdeaBox from './Pages/IdeaBox';
 import Settings from './Pages/Settings';
 import Groups from './Pages/Groups';
-import SidePanel from './Pages/Sidebar';
+import SidePanel from './Pages/SidePanel';
 import Abiamap from './Pages/Abiamap';
 import FeedPanel from './Pages/Feed';
 import CivicSparkChatbot from './Pages/Chatbot';
