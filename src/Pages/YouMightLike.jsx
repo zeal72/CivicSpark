@@ -27,6 +27,7 @@ const RightPanel = () => {
 								<div className="flex items-center">
 									<div className="flex -space-x-1">
 										<img src={Mutual1} alt="User" className="w-4 h-4 rounded-full border border-white" />
+										<img src={Mutual1} alt="User" className="w-4 h-4 rounded-full border border-white" />
 										{/* <img src={Mutual2} alt="User" className="w-4 h-4 rounded-full border border-white" /> */}
 										<img src={Mutual3} alt="User" className="w-4 h-4 rounded-full border border-white" />
 									</div>
@@ -69,7 +70,8 @@ const RightPanel = () => {
 						<div className="flex justify-between items-center mt-3 pt-2 border-t border-white/20">
 							<div className="flex -space-x-2">
 								<img src={Mutual1} alt="User 1" className="w-5 h-5 sm:w-6 sm:h-6 rounded-full border border-white" />
-								<img src={Mutual2} alt="User 2" className="w-5 h-5 sm:w-6 sm:h-6 rounded-full border border-white" />
+								<img src={Mutual1} alt="User 1" className="w-5 h-5 sm:w-6 sm:h-6 rounded-full border border-white" />
+								{/* <img src={Mutual2} alt="User 2" className="w-5 h-5 sm:w-6 sm:h-6 rounded-full border border-white" /> */}
 							</div>
 							<span className="text-xs sm:text-sm text-white/90">182 Joined</span>
 						</div>
@@ -96,7 +98,9 @@ const RightPanel = () => {
 						<div className="flex justify-between items-center mt-3 pt-2 border-t border-white/20">
 							<div className="flex -space-x-2">
 								<img src={Mutual1} alt="User 1" className="w-5 h-5 sm:w-6 sm:h-6 rounded-full border border-white" />
-								<img src={Mutual2} alt="User 2" className="w-5 h-5 sm:w-6 sm:h-6 rounded-full border border-white" />
+								<img src={Mutual1} alt="User 1" className="w-5 h-5 sm:w-6 sm:h-6 rounded-full border border-white" />
+								<img src={Mutual1} alt="User 1" className="w-5 h-5 sm:w-6 sm:h-6 rounded-full border border-white" />
+								{/* <img src={Mutual2} alt="User 2" className="w-5 h-5 sm:w-6 sm:h-6 rounded-full border border-white" /> */}
 							</div>
 							<span className="text-xs sm:text-sm text-white/90">182 Joined</span>
 						</div>
