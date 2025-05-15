@@ -97,6 +97,7 @@ const MainLayout = () => {
 				<div className="flex items-center gap-2 sm:gap-4">
 					<a
 						href="https://www.abia.tax/"
+						target='_blank'
 						className=" hidden lg:flex items-center gap-2 px-3 sm:px-4 py-2 text-white text-sm sm:text-base bg-[#09B264] rounded-md hover:opacity-90 transition"
 					>
 						<img
@@ -109,6 +110,7 @@ const MainLayout = () => {
 
 					<a
 						href="https://abiastate.gov.ng/mdas/"
+						target='_blank'
 						className="hidden lg:flex items-center gap-2 px-3 sm:px-4 py-2 text-white text-sm sm:text-base bg-[#09B264] rounded-md hover:opacity-90 transition"
 					>
 						<img
