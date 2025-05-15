@@ -132,7 +132,7 @@ const MainLayout = () => {
 					{activeTab === 'favourite' && <Favourite />}
 					{activeTab === 'groups' && <Groups />}
 					{activeTab === 'settings' && <Settings />}
-					{activeTab === 'abiamap' && < Abiamap />}
+					{activeTab === 'settings' && < Abiamap />}
 					{/* Add more conditions for other tabs */}
 				</div>
 

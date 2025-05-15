@@ -1,10 +1,9 @@
 import { X, Send, Mic, Plus } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import logo from "../assets/logo.png";
 import logo2 from "../assets/logoname.png";
 
-export default function CivicSparkChatbot() {
-  const [isOpen, setIsOpen] = useState(true);
+export default function CivicSparkChatbot({onClose}) {
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState([
     {
@@ -14,41 +13,85 @@ export default function CivicSparkChatbot() {
       timestamp: new Date().toLocaleTimeString(),
     },
   ]);
+	
   const [isTyping, setIsTyping] = useState(false);
 
-  const handleSend = () => {
-    const trimmed = input.trim();
-    if (!trimmed) return;
+  const handleSend = async () => {
+		const trimmed = input.trim();
+		if (!trimmed) return;
+	
+		const userMsg = {
+			sender: "user",
+			content: trimmed,
+			timestamp: new Date().toLocaleTimeString(),
+		};
+	
+		setMessages((prev) => [...prev, userMsg]);
+		setInput("");
+		setIsTyping(true);
+	
+		try {
+			const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+				method: "POST",
+				headers: {
+					"Authorization": `Bearer ${import.meta.env.VITE_APIKEY}`,
+					"Content-Type": "application/json",
+					// "HTTP-Referer": "https://your-site.com", // Replace with your actual domain
+					"X-Title": "CivicSpark ChatBot", // Optional
+				},
+				body: JSON.stringify({
+					model: "deepseek/deepseek-prover-v2:free", // Or any model OpenRouter supports
+					messages: [
+						{
+							role: "system",
+							content: "You are Civic Spark Chat Bot. You help users learn about Abia State.",
+						},
+						{
+							role: "user",
+							content: trimmed,
+						},
+					],
+				}),
+			});
+	
+			const data = await response.json();
+	
+			const botReply = data?.choices?.[0]?.message?.content || "Sorry, I didn’t get that.";
+	
+			const botMsg = {
+				sender: "bot",
+				content: botReply,
+				timestamp: new Date().toLocaleTimeString(),
+			};
+	
+			setMessages((prev) => [...prev, botMsg]);
+		} catch (error) {
+			const errorMsg = {
+				sender: "bot",
+				content: "Oops! Something went wrong. Please try again.",
+				timestamp: new Date().toLocaleTimeString(),
+			};
+			setMessages((prev) => [...prev, errorMsg]);
+			console.error("API Error:", error);
+		} finally {
+			setIsTyping(false);
+		}
+	};
+	
+	const messagesEndRef = useRef(null);
+	const scrollToBottom = () => {
+		messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+	};
+	useEffect(() => {
+		scrollToBottom();
+	}, [messages, isTyping]);
 
-    const userMsg = {
-      sender: "user",
-      content: trimmed,
-      timestamp: new Date().toLocaleTimeString(),
-    };
-
-    setMessages((prev) => [...prev, userMsg]);
-    setInput("");
-    setIsTyping(true);
-
-    // Simulate bot response
-    setTimeout(() => {
-      const botMsg = {
-        sender: "bot",
-        content: "Thanks for your question. We'll get back to you shortly!",
-        timestamp: new Date().toLocaleTimeString(),
-      };
-      setMessages((prev) => [...prev, botMsg]);
-      setIsTyping(false);
-    }, 1500);
-  };
-
-  if (!isOpen) return null;
-
+	
   return (
-    <div className="h-screen w-[340px] shadow-lg bg-white flex flex-col justify-between overflow-hidden fixed right-0 top-0 z-50">
+    <div className="h-screen sm:w-[300px] md:w-[340px] shadow-lg bg-white flex flex-col justify-between overflow-hidden fixed right-0 top-0 z-50">
       {/* Topbar */}
       <div className="absolute top-1 right-1 z-50 bg-[#09B264] rounded-lg p-1">
-        <button onClick={() => setIsOpen(false)}>
+        <button onClick={onClose}>
           <X className="w-7 text-white cursor-pointer" />
         </button>
       </div>
@@ -72,10 +115,11 @@ export default function CivicSparkChatbot() {
                 msg.sender === "user" ? "items-end" : "items-start"
               }`}
             >
-              <div
+              <div 
+								style={{ whiteSpace: "pre-wrap" }}
                 className={`text-sm p-2 rounded-md max-w-[80%] ${
                   msg.sender === "user"
-                    ? "bg-lime-700 text-white"
+                    ? "bg-gray-200 text-black"
                     : "bg-[#09B264] text-white"
                 }`}
               >
@@ -94,6 +138,9 @@ export default function CivicSparkChatbot() {
               <span>Civic Bot is typing...</span>
             </div>
           )}
+
+					<div ref={messagesEndRef} />
+
         </div>
       </div>
 
@@ -104,11 +151,17 @@ export default function CivicSparkChatbot() {
             <Plus className="w-4 h-4" />
           </button>
           <textarea
-            rows={1}
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            placeholder="Ask Civic Bot"
-            className="flex-1 resize-none px-3 py-2 rounded-md bg-gray-100 text-sm outline-none max-h-[120px]"
+            rows={3}
+						value={input}
+						onChange={(e) => setInput(e.target.value)}
+						onKeyDown={(e) => {
+							if (e.key === "Enter" && !e.shiftKey) {
+								e.preventDefault(); // Prevent newline
+								handleSend();       // Call your send function
+							}
+						}}
+						placeholder="Ask Civic Bot..."
+						className="flex-1 resize-none px-3 py-2 rounded-md bg-gray-100 text-sm outline-none max-h-[120px]"
           />
           <button className="p-1 text-gray-600">
             <Mic className="w-4 h-4" />
