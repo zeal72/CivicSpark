@@ -4,7 +4,7 @@ import PostImage from '../assets/post.png';
 import Like from '../assets/Union.png';
 import DisLike from '../assets/UnionRed.png';
 import Mutual1 from '../assets/Mutuals1.png'
-import Mutual2 from '../assets/Mutuals2.png'
+// import Mutual2 from '../assets/Mutuals2.png'
 import Mutual3 from '../assets/Mutuals3.png'
 
 const FeedPanel = () => {
@@ -104,7 +104,7 @@ const FeedPanel = () => {
 						<div className="flex items-center">
 							<div className="flex -space-x-3">
 								<img src={Mutual1} alt="User" className="w-6 h-6 rounded-full border-2 border-white" />
-								<img src={Mutual2} alt="User" className="w-6 h-6 rounded-full border-2 border-white" />
+								{/* <img src={Mutual2} alt="User" className="w-6 h-6 rounded-full border-2 border-white" /> */}
 								<img src={Mutual3} alt="User" className="w-6 h-6 rounded-full border-2 border-white" />
 							</div>
 							<span className="text-xs text-gray-500 ml-1">+32</span>
