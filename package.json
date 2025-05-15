@@ -7,8 +7,6 @@
     "dev": "vite --host",
     "build": "vite build",
 
-  "vercel-build": "npm run build",
-
     "lint": "eslint .",
     "preview": "vite preview"
   },
