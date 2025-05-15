@@ -1,7 +1,7 @@
 // import React from 'react';
 import Magic from '../assets/magicfm.png'
 import Mutual1 from '../assets/Mutuals1.png'
-import Mutual2 from '../assets/Mutuals2.png'
+// import Mutual2 from '../assets/Mutuals2.png'
 import Mutual3 from '../assets/Mutuals3.png'
 import Rad5 from '../assets/Rad5.png'
 const RightPanel = () => {
@@ -27,7 +27,7 @@ const RightPanel = () => {
 								<div className="flex items-center">
 									<div className="flex -space-x-1">
 										<img src={Mutual1} alt="User" className="w-4 h-4 rounded-full border border-white" />
-										<img src={Mutual2} alt="User" className="w-4 h-4 rounded-full border border-white" />
+										{/* <img src={Mutual2} alt="User" className="w-4 h-4 rounded-full border border-white" /> */}
 										<img src={Mutual3} alt="User" className="w-4 h-4 rounded-full border border-white" />
 									</div>
 									<span className="text-xs text-gray-500 ml-1">45 Mutuals</span>
