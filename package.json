@@ -12,6 +12,7 @@
   "dependencies": {
     "@reduxjs/toolkit": "^2.8.1",
     "@tailwindcss/vite": "^4.1.6",
+    "firebase": "^11.7.3",
     "framer-motion": "^12.11.1",
     "lucide-react": "^0.510.0",
     "prop-types": "^15.8.1",
