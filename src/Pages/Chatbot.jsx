@@ -94,7 +94,7 @@ export default function CivicSparkChatbot({ onClose }) {
 
 
   return (
-    <div className="h-screen sm:w-[300px] md:w-[340px] shadow-lg bg-white flex flex-col justify-between overflow-hidden fixed right-0 top-0 z-50">
+    <div className="h-full sm:w-[300px] md:w-[340px] shadow-lg bg-white flex flex-col justify-between overflow-hidden fixed right-0 top-0 z-50">
       {/* Topbar */}
       <div className="absolute top-1 right-1 z-50 bg-[#09B264] rounded-lg p-1" >
         <button onClick={onClose}>
@@ -154,12 +154,12 @@ export default function CivicSparkChatbot({ onClose }) {
 
       {/* Input area */}
       < div className="border-t px-2 py-2" >
-        <div className="flex items-end gap-2">
+        <div className="flex items-start gap-2">
           <button className="p-1 text-gray-600">
-            <Plus className="w-4 h-4" />
+            <Plus className="w-6 h-6" />
           </button>
           <textarea
-            rows={3}
+            rows={2}
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={(e) => {
@@ -172,10 +172,10 @@ export default function CivicSparkChatbot({ onClose }) {
             className="flex-1 resize-none px-3 py-2 rounded-md bg-gray-100 text-sm outline-none max-h-[120px]"
           />
           <button className="p-1 text-gray-600">
-            <Mic className="w-4 h-4" />
+            <Mic className="w-6 h-6" />
           </button>
           <button onClick={handleSend} className="bg-[#09B264] p-2 rounded-md">
-            <Send className="w-4 h-4 text-white" />
+            <Send className="w-6 h-6 text-white" />
           </button>
         </div>
       </div >
