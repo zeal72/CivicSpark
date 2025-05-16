@@ -1,9 +1,7 @@
 {
-  "build": {
-    "env": {
-      "NODE_ENV": "production"
-    },
-    "buildCommand": "CI=false npm run build"
+  "buildCommand": "CI=false npm run build",
+  "env": {
+    "NODE_ENV": "production"
   },
   "routes": [
     {
