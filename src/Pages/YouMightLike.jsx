@@ -4,6 +4,7 @@ import Mutual1 from '../assets/Mutuals1.png'
 // import Mutual2 from '../assets/Mutuals2.png'
 import Mutual3 from '../assets/Mutuals3.png'
 import Rad5 from '../assets/Rad5.png'
+import Google from '../assets/Google.png'
 const RightPanel = () => {
 	return (
 		<div className="w-80 bg-white h-screen border-l border-gray-200 overflow-y-auto">
@@ -51,7 +52,7 @@ const RightPanel = () => {
 				</div>
 
 				{/* Event Card 1 */}
-				<div className="bg-[#AA1F2E]  rounded-xl text-white shadow-sm border border-gray-200 mb-4 p-3 sm:p-4">
+				<div className="bg-[#09B264]  rounded-xl text-white shadow-sm border border-gray-200 mb-4 p-3 sm:p-4">
 					<div className="flex items-start gap-3">
 						<div className="w-14 h-14 rounded-lg overflow-hidden flex-shrink-0">
 							<img src={Rad5} alt="Rad5 Logo" className="w-full h-full object-cover" />
@@ -79,20 +80,20 @@ const RightPanel = () => {
 				</div>
 
 				{/* Event Card 2 */}
-				<div className="bg-[#09B264]  rounded-xl text-white shadow-sm border border-gray-200 mb-4 p-3 sm:p-4">
+				<div className=" bg-[#AA1F2E]  rounded-xl text-white shadow-sm border border-gray-200 mb-4 p-3 sm:p-4">
 					<div className="flex items-start gap-3">
 						<div className="w-14 h-14 rounded-lg overflow-hidden flex-shrink-0">
-							<img src={Rad5} alt="Rad5 Logo" className="w-full h-full object-cover" />
+							<img src={Google} alt="Rad5 Logo" className="w-full h-full object-cover" />
 						</div>
 						<div>
-							<p className="text-sm sm:text-base font-medium">Rad5 Tech Hub</p>
+							<p className="text-sm sm:text-base font-medium">GDG ABA </p>
 							<p className="text-xs sm:text-sm text-gray-200">14 MAY 2025</p>
 						</div>
 					</div>
 
 					<div className="mt-3">
 						<h4 className="text-sm sm:text-base font-semibold leading-snug">
-							Launch Your Career Or Grow Your Business With Social Media.
+							Google Io Extended event coming up soon
 						</h4>
 
 						<div className="flex justify-between items-center mt-3 pt-2 border-t border-white/20">

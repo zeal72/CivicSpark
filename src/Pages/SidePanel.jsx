@@ -1,4 +1,5 @@
 // import React from 'react';
+import FullLogo from '../assets/wisdom.png'
 import PropTypes from 'prop-types';
 const SidePanel = ({ onNavItemClick, activeTab }) => {
 	// Navigation items with their icons and labels
@@ -74,7 +75,9 @@ const SidePanel = ({ onNavItemClick, activeTab }) => {
 		<div className="w-60 bg-white h-full overflow-y-auto flex flex-col p-4 shadow-sm">
 			{/* User Profile Area */}
 			<div className="flex items-center space-x-3 pb-4 mb-4 border-b border-gray-100">
-				<div className="w-10 h-10 rounded-full bg-green-100"></div>
+				<div className="w-10 h-10 rounded-full ">
+					<img src={FullLogo} alt="" className='w-full' />
+				</div>
 				<div>
 					<h3 className="font-medium text-sm">User Name</h3>
 					<p className="text-xs text-gray-500">View Profile</p>

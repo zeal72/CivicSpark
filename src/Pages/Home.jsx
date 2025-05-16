@@ -3,7 +3,7 @@ import SidePanel from './SidePanel';
 import FeedPanel from './Feed';
 import RightPanel from './YouMightLike';
 import ChatBot from './Chatbot';
-import { MessageCircle } from 'lucide-react';
+// import { MessageCircle } from 'lucide-react';
 import Logo from '../assets/FullLogo.png';
 import Link from '../assets/Link.png';
 import Percentage from '../assets/percentage.png';
@@ -11,6 +11,7 @@ import IdeaBox from './IdeaBox';
 import Groups from './Groups';
 import Favourite from './Favourite';
 import Settings from './Settings';
+import { Bot } from 'lucide-react';
 import Abiamap from './Abiamap';
 import CivicSparkLoader from '../Components/Loader';
 
@@ -69,11 +70,11 @@ const MainLayout = () => {
 			setActiveTab(tab);
 			setLoading(false);
 			if (isMobile) setShowSidebar(false);
-		}, 2000);
+		}, 400);
 	};
 
 	return (
-		<div className="flex flex-col h-screen overflow-hidden">
+		<div className="flex flex-col h-screen overflow-hidden bg-gray-50">
 			{/* Header */}
 			<header className="fixed top-0 left-0 right-0 h-16 bg-white shadow-md z-30 flex items-center justify-between px-4 md:px-8">
 				<div className="flex items-center space-x-3">
@@ -192,9 +193,9 @@ const MainLayout = () => {
 			{/* Chat Bot Toggle Button */}
 			<button
 				onClick={toggleChatBot}
-				className="fixed bottom-6 right-6 z-40 bg-green-600 text-white p-3 rounded-full shadow-lg hover:bg-green-700"
+				className="fixed bottom-14 lg:bottom-10 right-3 lg:right-10 z-40 bg-green-600 text-white p-3 rounded-full shadow-lg hover:bg-green-700"
 			>
-				<MessageCircle className="w-7 h-7" />
+				<Bot className="w-7 h-7" />
 			</button>
 
 			{/* Chat Bot Panel */}
