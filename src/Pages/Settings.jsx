@@ -1,13 +1,11 @@
 import { useState, useEffect } from 'react';
-import { SunIcon, MoonIcon, Cog6ToothIcon, BellIcon, UserIcon, ShieldCheckIcon, QuestionMarkCircleIcon, ArrowLeftIcon } from '@heroicons/react/24/outline';
+import { Cog6ToothIcon, BellIcon, UserIcon, ShieldCheckIcon, QuestionMarkCircleIcon, ArrowLeftIcon } from '@heroicons/react/24/outline';
 
 // Language translations
 const translations = {
   en: {
     settings: "Settings",
     general: "General",
-    darkMode: "Dark Mode",
-    darkModeDescription: "Switch between light and dark theme",
     language: "Language",
     languageDescription: "Select your preferred language",
     notifications: "Notifications",
@@ -35,8 +33,6 @@ const translations = {
   es: {
     settings: "Configuración",
     general: "General",
-    darkMode: "Modo oscuro",
-    darkModeDescription: "Cambiar entre tema claro y oscuro",
     language: "Idioma",
     languageDescription: "Selecciona tu idioma preferido",
     notifications: "Notificaciones",
@@ -64,8 +60,6 @@ const translations = {
   fr: {
     settings: "Paramètres",
     general: "Général",
-    darkMode: "Mode sombre",
-    darkModeDescription: "Basculer entre le thème clair et sombre",
     language: "Langue",
     languageDescription: "Sélectionnez votre langue préférée",
     notifications: "Notifications",
@@ -93,8 +87,6 @@ const translations = {
   de: {
     settings: "Einstellungen",
     general: "Allgemein",
-    darkMode: "Dunkler Modus",
-    darkModeDescription: "Wechseln Sie zwischen hellem und dunklem Thema",
     language: "Sprache",
     languageDescription: "Wählen Sie Ihre bevorzugte Sprache",
     notifications: "Benachrichtigungen",
@@ -122,17 +114,6 @@ const translations = {
 };
 
 const SettingsPage = () => {
-  const [darkMode, setDarkMode] = useState(() => {
-    if (typeof window !== 'undefined') {
-      const savedMode = localStorage.getItem('darkMode');
-      if (savedMode !== null) {
-        return savedMode === 'true';
-      }
-      return window.matchMedia('(prefers-color-scheme: dark)').matches;
-    }
-    return false;
-  });
-
   const [language, setLanguage] = useState(() => {
     if (typeof window !== 'undefined') {
       return localStorage.getItem('language') || 'en';
@@ -142,23 +123,9 @@ const SettingsPage = () => {
 
   const [activeSection, setActiveSection] = useState('general');
 
-  // Apply dark mode and language settings
-  useEffect(() => {
-    if (darkMode) {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-    localStorage.setItem('darkMode', darkMode);
-  }, [darkMode]);
-
   useEffect(() => {
     localStorage.setItem('language', language);
   }, [language]);
-
-  const toggleDarkMode = () => {
-    setDarkMode(!darkMode);
-  };
 
   const handleLanguageChange = (e) => {
     setLanguage(e.target.value);
@@ -175,28 +142,13 @@ const SettingsPage = () => {
         <div className="space-y-6">
           <div className="flex items-center justify-between">
             <div>
-              <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100">{t.darkMode}</h3>
-              <p className="text-sm text-gray-500 dark:text-gray-400">{t.darkModeDescription}</p>
-            </div>
-            <button
-              onClick={toggleDarkMode}
-              className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 ${darkMode ? 'bg-indigo-600' : 'bg-gray-200'}`}
-            >
-              <span
-                className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${darkMode ? 'translate-x-6' : 'translate-x-1'}`}
-              />
-            </button>
-          </div>
-          
-          <div className="flex items-center justify-between">
-            <div>
-              <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100">{t.language}</h3>
-              <p className="text-sm text-gray-500 dark:text-gray-400">{t.languageDescription}</p>
+              <h3 className="text-lg font-medium text-gray-900">{t.language}</h3>
+              <p className="text-sm text-gray-500">{t.languageDescription}</p>
             </div>
             <select
               value={language}
               onChange={handleLanguageChange}
-              className="mt-1 block w-32 rounded-md border-gray-300 dark:border-gray-600 py-2 pl-3 pr-10 text-base focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 dark:bg-gray-700 dark:text-gray-100"
+              className="mt-1 block w-32 rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 bg-white"
             >
               <option value="en">English</option>
               <option value="es">Español</option>
@@ -219,14 +171,14 @@ const SettingsPage = () => {
                 id="email-notifications"
                 name="email-notifications"
                 type="checkbox"
-                className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 dark:border-gray-600 dark:bg-gray-700"
+                className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
               />
             </div>
             <div className="ml-3 text-sm">
-              <label htmlFor="email-notifications" className="font-medium text-gray-700 dark:text-gray-200">
+              <label htmlFor="email-notifications" className="font-medium text-gray-700">
                 {t.emailNotifications}
               </label>
-              <p className="text-gray-500 dark:text-gray-400">{t.emailNotificationsDesc}</p>
+              <p className="text-gray-500">{t.emailNotificationsDesc}</p>
             </div>
           </div>
           
@@ -236,15 +188,15 @@ const SettingsPage = () => {
                 id="push-notifications"
                 name="push-notifications"
                 type="checkbox"
-                className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 dark:border-gray-600 dark:bg-gray-700"
+                className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                 defaultChecked
               />
             </div>
             <div className="ml-3 text-sm">
-              <label htmlFor="push-notifications" className="font-medium text-gray-700 dark:text-gray-200">
+              <label htmlFor="push-notifications" className="font-medium text-gray-700">
                 {t.pushNotifications}
               </label>
-              <p className="text-gray-500 dark:text-gray-400">{t.pushNotificationsDesc}</p>
+              <p className="text-gray-500">{t.pushNotificationsDesc}</p>
             </div>
           </div>
         </div>
@@ -257,25 +209,25 @@ const SettingsPage = () => {
       content: (
         <div className="space-y-6">
           <div>
-            <label htmlFor="username" className="block text-sm font-medium text-gray-700 dark:text-gray-200">
+            <label htmlFor="username" className="block text-sm font-medium text-gray-700">
               {t.username}
             </label>
             <input
               type="text"
               id="username"
-              className="mt-1 block w-full h-10 pl-5 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 sm:text-sm"
+              className="mt-1 block w-full h-10 pl-5 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
               defaultValue="johndoe"
             />
           </div>
           
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-200">
+            <label htmlFor="email" className="block text-sm font-medium text-gray-700">
               {t.email}
             </label>
             <input
               type="email"
               id="email"
-              className="mt-1 block w-full h-10 pl-5 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 sm:text-sm"
+              className="mt-1 block w-full h-10 pl-5 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
               defaultValue="john@example.com"
             />
           </div>
@@ -300,14 +252,14 @@ const SettingsPage = () => {
                 id="data-collection"
                 name="data-collection"
                 type="checkbox"
-                className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 dark:border-gray-600 dark:bg-gray-700"
+                className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
               />
             </div>
             <div className="ml-3 text-sm">
-              <label htmlFor="data-collection" className="font-medium text-gray-700 dark:text-gray-200">
+              <label htmlFor="data-collection" className="font-medium text-gray-700">
                 {t.dataCollection}
               </label>
-              <p className="text-gray-500 dark:text-gray-400">{t.dataCollectionDesc}</p>
+              <p className="text-gray-500">{t.dataCollectionDesc}</p>
             </div>
           </div>
           
@@ -317,15 +269,15 @@ const SettingsPage = () => {
                 id="personalized-ads"
                 name="personalized-ads"
                 type="checkbox"
-                className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 dark:border-gray-600 dark:bg-gray-700"
+                className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                 defaultChecked
               />
             </div>
             <div className="ml-3 text-sm">
-              <label htmlFor="personalized-ads" className="font-medium text-gray-700 dark:text-gray-200">
+              <label htmlFor="personalized-ads" className="font-medium text-gray-700">
                 {t.personalizedAds}
               </label>
-              <p className="text-gray-500 dark:text-gray-400">{t.personalizedAdsDesc}</p>
+              <p className="text-gray-500">{t.personalizedAdsDesc}</p>
             </div>
           </div>
         </div>
@@ -338,21 +290,21 @@ const SettingsPage = () => {
       content: (
         <div className="space-y-6">
           <div>
-            <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100">{t.documentation}</h3>
-            <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+            <h3 className="text-lg font-medium text-gray-900">{t.documentation}</h3>
+            <p className="mt-1 text-sm text-gray-500">
               {t.documentationDesc}
             </p>
-            <button className="mt-2 text-sm text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300">
+            <button className="mt-2 text-sm text-indigo-600 hover:text-indigo-500">
               {t.viewDocumentation}
             </button>
           </div>
           
           <div>
-            <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100">{t.contactSupport}</h3>
-            <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+            <h3 className="text-lg font-medium text-gray-900">{t.contactSupport}</h3>
+            <p className="mt-1 text-sm text-gray-500">
               {t.contactSupportDesc}
             </p>
-            <button className="mt-2 text-sm text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300">
+            <button className="mt-2 text-sm text-indigo-600 hover:text-indigo-500">
               {t.contactSupportButton}
             </button>
           </div>
@@ -362,36 +314,25 @@ const SettingsPage = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-200">
+    <div className="min-h-screen bg-dark">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="flex items-center mb-8">
-          <button className="mr-4 p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700">
-            <ArrowLeftIcon className="h-5 w-5 text-gray-600 dark:text-gray-300" />
+          <button className="mr-4 p-2 rounded-full hover:bg-gray-200">
+            <ArrowLeftIcon className="h-5 w-5 text-gray-600" />
           </button>
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">{t.settings}</h1>
-          <button
-            onClick={toggleDarkMode}
-            className="ml-auto p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700"
-            aria-label={darkMode ? t.darkMode : t.darkMode}
-          >
-            {darkMode ? (
-              <SunIcon className="h-6 w-6 text-yellow-400" />
-            ) : (
-              <MoonIcon className="h-6 w-6 text-gray-600" />
-            )}
-          </button>
+          <h1 className="text-3xl font-bold text-gray-900">{t.settings}</h1>
         </div>
         
-        <div className="bg-white dark:bg-gray-800 shadow rounded-lg overflow-hidden">
+        <div className="bg-white shadow rounded-lg overflow-hidden">
           <div className="flex flex-col md:flex-row">
             {/* Sidebar navigation */}
-            <div className="md:w-64 border-b md:border-b-0 md:border-r border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-700">
+            <div className="md:w-64 border-b md:border-b-0 md:border-r border-gray-200 bg-white">
               <nav className="p-4 space-y-1">
                 {settingsSections.map((section) => (
                   <button
                     key={section.id}
                     onClick={() => setActiveSection(section.id)}
-                    className={`w-full flex items-center px-3 py-2 text-sm font-medium rounded-md ${activeSection === section.id ? 'bg-indigo-50 text-indigo-700 dark:bg-gray-600 dark:text-indigo-300' : 'text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600'}`}
+                    className={`w-full flex items-center px-3 py-2 text-sm font-medium rounded-md ${activeSection === section.id ? 'bg-indigo-50 text-indigo-700' : 'text-gray-700 hover:bg-gray-100'}`}
                   >
                     <span className="mr-3">{section.icon}</span>
                     {section.title}
