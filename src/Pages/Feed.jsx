@@ -4,14 +4,17 @@ import PostImage from '../assets/post.png';
 import Like from '../assets/Union.png';
 import DisLike from '../assets/UnionRed.png';
 import Mutual1 from '../assets/Mutuals1.png'
+import { Send, } from "lucide-react";
 // import Mutual2 from '../assets/Mutuals2.png'
 import Mutual3 from '../assets/Mutuals3.png'
+// import React from 'react';
+import { FiBookmark } from 'react-icons/fi';
 
 const FeedPanel = () => {
 	const [postText, setPostText] = useState('');
 
 	return (
-		<div className="w-full bg-gray-50 border-x border-gray-200 h-screen pb-20">
+		<div className="w-full border-x border-gray-200 h-screen pb-20">
 			{/* Post Creation Area */}
 			<div className="bg-white p-4 mb-4 rounded-lg shadow-sm mx-2 sm:mx-4 mt-4">
 				<div className="flex flex-wrap items-center gap-3 mb-3">
@@ -60,21 +63,8 @@ const FeedPanel = () => {
 							<p className="text-xs text-gray-500">TUESDAY, 16 MAY 2025</p>
 						</div>
 					</div>
-					<button className="text-green-600 shrink-0">
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							width="24"
-							height="24"
-							viewBox="0 0 24 24"
-							fill="none"
-							stroke="currentColor"
-							strokeWidth="2"
-							strokeLinecap="round"
-							strokeLinejoin="round"
-							className="lucide lucide-bookmark"
-						>
-							<path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z" />
-						</svg>
+					<button className="text-gray-600 shrink-0 mt-2">
+						<FiBookmark size={20} />
 					</button>
 				</div>
 
@@ -114,24 +104,26 @@ const FeedPanel = () => {
 						</span>
 					</div>
 
-					<div className="flex flex-wrap justify-between gap-3">
-						<button className="flex items-center space-x-1 text-sm text-gray-500 hover:text-blue-500">
+					<div className="flex flex-wrap justify-between gap-3 my-4 sm:my-2">
+						<button className="flex items-center space-x-1 text-sm text-gray-500 border-gray-500 hover:text-blue-500 px-2 py-1 cursor-pointer border-1 rounded-md">
 							<span className="text-xs bg-gray-100 px-2 py-1 rounded">102</span>
 							<img src={Like} alt="" />
 							<span>Like</span>
 						</button>
-						<button className="flex items-center space-x-1 text-sm text-gray-500 hover:text-red-500">
+						<button className="flex items-center space-x-1 text-sm text-gray-500 border-gray-500 hover:text-red-500 px-2 py-1 cursor-pointer border-1 rounded-md">
 							<span className="text-xs bg-gray-100 px-2 py-1 rounded">40</span>
 							<img src={DisLike} alt="" />
 							<span>Dislike</span>
 						</button>
-						<button className="text-sm text-gray-500">Comment</button>
+						<button className="text-sm text-gray-500  cursor-pointer hover:underline hover:text-blue-500">Comment</button>
 					</div>
 				</div>
 
 				{/* Comment Input */}
 				<div className="bg-white border-t pt-4 mt-4 border-gray-200 w-full flex flex-wrap items-center gap-3">
-					<div className="w-8 h-8 rounded-full bg-red-200 flex-shrink-0" />
+					<div className="w-8 h-8 rounded-full flex-shrink-0" >
+						<img src={Mutual1} alt="" className='w-full object-fit-cover' />
+					</div>
 					<input
 						type="text"
 						className="flex-1 min-w-0 bg-gray-100 rounded-sm outline-none py-2 px-4 text-sm text-gray-700"
@@ -147,13 +139,9 @@ const FeedPanel = () => {
 						</svg>
 					</button>
 					<button className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center text-white shrink-0">
-						<svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
-							<path
-								fillRule="evenodd"
-								d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707l-3-3a1 1 0 00-1.414 0l-3 3a1 1 0 001.414 1.414L9 9.414V13a1 1 0 102 0V9.414l1.293 1.293a1 1 0 001.414-1.414z"
-								clipRule="evenodd"
-							/>
-						</svg>
+						<button className="bg-[#09B264] p-2 rounded-md">
+							<Send className="w-4 h-4 text-white" />
+						</button>
 					</button>
 				</div>
 			</div>
