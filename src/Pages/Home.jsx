@@ -24,6 +24,25 @@ const MainLayout = () => {
 	const [loading, setLoading] = useState(false);
 	const [loadingMessage, setLoadingMessage] = useState('');
 
+	const handleLogout = async () => {
+		try {
+			// 1. Clear authentication state (tokens, user data)
+			localStorage.removeItem('authToken');
+			localStorage.removeItem('userData');
+			sessionStorage.clear();
+
+			// 3. Navigate to login page
+			navigate('/login');
+
+
+			return true; // Indicate successful logout
+		} catch (error) {
+			console.error('Logout failed:', error);
+			return false; // Indicate failed logout
+		}
+	};
+
+
 	useEffect(() => {
 		const handleResize = () => {
 			const mobile = window.innerWidth < 1024;
@@ -147,7 +166,11 @@ const MainLayout = () => {
 						? `${showSidebar ? 'translate-x-0' : '-translate-x-full'} fixed top-16 left-0 bottom-0 z-30 w-60 bg-white transition-transform duration-300 ease-in-out`
 						: 'hidden md:block w-60 border-r border-gray-200'
 					}`}>
-					<SidePanel onNavItemClick={handleNavItemClick} activeTab={activeTab} />
+					<SidePanel
+						onNavItemClick={handleNavItemClick}
+						activeTab={activeTab}
+						onLogout={handleLogout}
+					/>
 				</div>
 
 				{/* Feed Panel (Scrollable) */}
