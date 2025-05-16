@@ -10,20 +10,30 @@
     "preview": "vite preview"
   },
   "dependencies": {
+<<<<<<< HEAD
+=======
+    "@heroicons/react": "^2.2.0",
+>>>>>>> d1aca454c0cff1989b9fa524d54e90898c236c32
     "@react-google-maps/api": "^2.20.6",
     "@reduxjs/toolkit": "^2.8.1",
     "@tailwindcss/vite": "^4.1.6",
+    "autoprefixer": "^10.4.21",
     "firebase": "^11.7.3",
     "framer-motion": "^12.11.1",
     "lucide-react": "^0.510.0",
+    "postcss": "^8.5.3",
     "prop-types": "^15.8.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-icons": "^5.5.0",
     "react-redux": "^9.2.0",
     "react-router-dom": "^7.6.0",
+<<<<<<< HEAD
     "react-toastify": "^11.0.5",
     "tailwindcss": "^4.1.6"
+=======
+    "tailwindcss": "^4.1.7"
+>>>>>>> d1aca454c0cff1989b9fa524d54e90898c236c32
   },
   "devDependencies": {
     "@eslint/js": "^9.13.0",
