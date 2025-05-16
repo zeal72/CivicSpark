@@ -1,15 +1,15 @@
 import { useState } from "react";
-import abiatech from "../assets/abiatech.png";
-import business from "../assets/business.png";
-import umuahia from "../assets/umuahia.jpg";
-import health from "../assets/health.jpg";
+import abiatech from "../../src/assets/abiatech.png";
+import business from "../../src/assets/business.png";
+import umuahia from "../../src/assets/umuahia.jpg";
+import health from "../../src/assets/health.jpg";
 
 
 const mockGroups = [
   {
     id: 1,
     name: "Abia State Technology",
-    image: abiatech, // Replace with actual image
+    image: abiatech, 
     members: 158000,
   },
   {
