@@ -1,29 +1,33 @@
 import { useState } from "react";
-// import { useNavigate } from "react-router-dom";
+import abiatech from "../assets/abiatech.png";
+import business from "../assets/business.png";
+import umuahia from "../assets/umuahia.jpg";
+import health from "../assets/health.jpg";
+
 
 const mockGroups = [
   {
     id: 1,
     name: "Abia State Technology",
-    image: "../src/assets/abiatech.png", // Replace with actual image
+    image: abiatech, // Replace with actual image
     members: 158000,
   },
   {
     id: 2,
     name: "Abia Business Network",
-    image: "../src/assets/business.png",
+    image: business,
     members: 98200,
   },
   {
     id: 3,
     name: "Umuahia Developers",
-    image: "../src/assets/umuahia.jpg",
+    image: umuahia,
     members: 45600,
   },
   {
     id: 4,
     name: "Health Workers in Abia",
-    image: "../src/assets/health.jpg",
+    image: health,
     members: 73200,
   },
 ];
