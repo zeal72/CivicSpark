@@ -18,7 +18,7 @@ export default function CivicSparkLoader({ fullscreen = true, message = null }) 
 			const timer = setTimeout(() => {
 				setLoadingText(fullText.substring(0, textIndex + 1));
 				setTextIndex(textIndex + 1);
-			}, 40);
+			}, 15);
 
 			return () => clearTimeout(timer);
 		}

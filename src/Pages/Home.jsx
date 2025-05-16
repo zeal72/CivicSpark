@@ -70,7 +70,7 @@ const MainLayout = () => {
 			setActiveTab(tab);
 			setLoading(false);
 			if (isMobile) setShowSidebar(false);
-		}, 2000);
+		}, 400);
 	};
 
 	return (

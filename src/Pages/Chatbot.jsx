@@ -164,8 +164,8 @@ export default function CivicSparkChatbot({ onClose }) {
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={(e) => {
               if (e.key === "Enter" && !e.shiftKey) {
-                e.preventDefault(); // Prevent newline
-                handleSend();       // Call your send function
+                e.preventDefault();
+                handleSend();
               }
             }}
             placeholder="Ask Civic Bot..."
