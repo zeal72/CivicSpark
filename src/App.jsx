@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import CivicSparkLoader from './Components/Loader';
 import MainLayout from './Pages/Home';
 import Favourite from './Pages/Favourite';
@@ -10,37 +13,56 @@ import Groups from './Pages/Groups';
 import SidePanel from './Pages/SidePanel';
 import Abiamap from './Pages/Abiamap';
 import FeedPanel from './Pages/Feed';
-import CivicSparkChatbot from './Pages/Chatbot';
-import LandingPage from './Pages/LandingPage';
+import CivicSparkLandingPage from './Pages/LandingPage';
+import Login from './Pages/SignIn';
+import SignUp from './Pages/signup';
+
+import { AuthProvider } from './Components/Context';
+import ProtectedRoute from './Components/protectedroutes';
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 400);
+    const timer = setTimeout(() => setIsLoading(false), 400);
     return () => clearTimeout(timer);
   }, []);
 
   return isLoading ? (
     <CivicSparkLoader />
   ) : (
-    <Router>
-      <Routes>
-        <Route path="/" element={<MainLayout />} />
-        <Route path="/home" element={<MainLayout />} />
-        <Route path="/favourite" element={<Favourite />} />
-        <Route path="/ideabox" element={<IdeaBox />} />
-        <Route path="/settings" element={<Settings />} />
-        <Route path="/groups" element={<Groups />} />
-        <Route path="/sidebar" element={<SidePanel />} />
-        <Route path="/abiamap" element={<Abiamap />} />
-        <Route path="/feed" element={<FeedPanel />} />
-        <Route path="/LandingPage" element={<LandingPage />} />
-        <Route path="/chatbot" element={<CivicSparkChatbot />} />
-      </Routes>
-    </Router>
+    <AuthProvider>
+      <Router>
+        <ToastContainer
+          position="top-center"
+          autoClose={3000}
+          hideProgressBar={false}
+          newestOnTop
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
+        <Routes>
+          {/* Public Routes */}
+          <Route path="/" element={<CivicSparkLandingPage />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/landingpage" element={<CivicSparkLandingPage />} />
+
+          {/* Protected Routes */}
+          <Route path="/home" element={<ProtectedRoute><MainLayout /></ProtectedRoute>} />
+          <Route path="/favourite" element={<ProtectedRoute><Favourite /></ProtectedRoute>} />
+          <Route path="/ideabox" element={<ProtectedRoute><IdeaBox /></ProtectedRoute>} />
+          <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
+          <Route path="/groups" element={<ProtectedRoute><Groups /></ProtectedRoute>} />
+          <Route path="/sidebar" element={<ProtectedRoute><SidePanel /></ProtectedRoute>} />
+          <Route path="/abiamap" element={<ProtectedRoute><Abiamap /></ProtectedRoute>} />
+          <Route path="/feed" element={<ProtectedRoute><FeedPanel /></ProtectedRoute>} />
+        </Routes>
+      </Router>
+    </AuthProvider>
   );
 }
 
