@@ -7,7 +7,7 @@ import Rad5 from '../assets/Rad5.png'
 import Google from '../assets/Google.png'
 const RightPanel = () => {
 	return (
-		<div className="w-80 bg-white h-screen border-l border-gray-200 overflow-y-auto">
+		<div className="w-80 bg-white h-screen border-l border-gray-200 overflow-y-auto mb-6">
 
 			{/* You Might Like Section */}
 			<div className="p-4 border-b border-gray-100">
