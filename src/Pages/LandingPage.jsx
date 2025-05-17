@@ -141,14 +141,14 @@ function CivicSparkLandingPage() {
 					</div>
 
 
-					<p className="mt-8 text-lg leading-relaxed text-gray-300 text-center lg:text-left font-serif">
+					<p className="mt-8 text-lg leading-relaxed text-gray-300 text-center lg:text-left font-serif mb-6">
 						Civic Spark Is A Government-Customized Social Media Platform Designed To Bring Citizens And Authorities Closer.
 						Report Local Happenings, Engage In Constructive Dialogue, And Stay Updated On Important State Developments.
 						Experience A New Level Of Transparency And Civic Participation.
 					</p>
 
 
-					<Link to="signup" className="bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-6 mt-4 rounded-sm  text-center transition duration-200">
+					<Link to="signup" className="bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-6 mt-8 rounded-sm  text-center transition duration-200">
 						Sign up
 					</Link>
 				</div>
