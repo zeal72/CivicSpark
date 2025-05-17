@@ -174,9 +174,9 @@ const MainLayout = () => {
 				</div>
 
 				{/* Feed Panel (Scrollable) */}
-				<div className="flex-1 bg-white overflow-y-auto">
+				<div className="flex-1 bg-white overflow-y-auto h-full">
 					{loading ? (
-						<div className="h-full flex items-center justify-center">
+						<div className="flex items-center justify-center">
 							<CivicSparkLoader fullscreen={false} message={loadingMessage} />
 						</div>
 					) : (
