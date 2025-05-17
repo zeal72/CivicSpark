@@ -4,7 +4,7 @@ import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig({
   plugins: [react(), tailwindcss()],
-  base: 'https://zeal72.github.io/CivicSpark/',
+  base: '/CivicSpark',
   build: {
     rollupOptions: {
       context: 'globalThis'

@@ -1,6 +1,7 @@
 {
   "name": "civicspark",
   "private": true,
+  "homepage": "https://zeal72.github.io/CivicSpark",
   "version": "0.0.0",
   "type": "module",
   "scripts": {

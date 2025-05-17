@@ -32,7 +32,8 @@ function App() {
     <CivicSparkLoader />
   ) : (
     <AuthProvider>
-      <Router>
+      <Router basename="/CivicSpark">
+
         <ToastContainer
           position="top-center"
           autoClose={3000}
