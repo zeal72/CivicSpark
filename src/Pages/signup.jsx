@@ -92,9 +92,10 @@ const SignUp = () => {
 			const result = await signInWithPopup(auth, provider);
 			const user = result.user;
 
-			const nameParts = user.displayName?.split(' ') || ['', ''];
-			const firstName = nameParts[0];
-			const lastName = nameParts.slice(1).join(' ');
+			const displayName = user.displayName || "Anonymous User";
+			const nameParts = displayName.split(' ');
+			const firstName = nameParts[0] || '';
+			const lastName = nameParts.slice(1).join(' ') || '';
 
 			await setDoc(doc(db, 'users', user.uid), {
 				uid: user.uid,
@@ -105,7 +106,7 @@ const SignUp = () => {
 				email: user.email,
 				provider: 'google',
 				createdAt: new Date().toISOString()
-			});
+			}, { merge: true }); // Merge with existing document if any
 
 			toast.success('Google signup successful!');
 			setTimeout(() => navigate('/home'), 1500);

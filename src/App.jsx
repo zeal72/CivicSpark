@@ -3,6 +3,8 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth } from '../Firebase.config'; // make sure your Firebase auth is exported from here
 
 import CivicSparkLoader from './Components/Loader';
 import MainLayout from './Pages/Home';
@@ -21,19 +23,30 @@ import { AuthProvider } from './Components/Context';
 import ProtectedRoute from './Components/protectedroutes';
 
 function App() {
-  const [isLoading, setIsLoading] = useState(true);
+  const [authChecked, setAuthChecked] = useState(false);
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
-    const timer = setTimeout(() => setIsLoading(false), 400);
-    return () => clearTimeout(timer);
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      if (currentUser && currentUser.emailVerified) {
+        setUser(currentUser);
+      } else {
+        setUser(null);
+      }
+      setAuthChecked(true);
+    });
+
+    return () => unsubscribe();
   }, []);
 
-  return isLoading ? (
-    <CivicSparkLoader />
-  ) : (
+  if (!authChecked) {
+    // You can style this loader to be more fun/engaging
+    return <CivicSparkLoader message="Warming up CivicSpark..." />;
+  }
+
+  return (
     <AuthProvider>
       <Router basename="/CivicSpark">
-
         <ToastContainer
           position="top-center"
           autoClose={3000}
@@ -45,6 +58,7 @@ function App() {
           draggable
           pauseOnHover
         />
+
         <Routes>
           {/* Public Routes */}
           <Route path="/" element={<CivicSparkLandingPage />} />
