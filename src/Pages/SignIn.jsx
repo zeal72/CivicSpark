@@ -1,4 +1,3 @@
-// src/components/Login.jsx
 import { useState } from 'react';
 import { auth, provider } from '../../Firebase.config';
 import { signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
@@ -8,6 +7,25 @@ import 'react-toastify/dist/ReactToastify.css';
 import { motion } from 'framer-motion';
 import { FcGoogle } from 'react-icons/fc';
 import { RiLockPasswordLine, RiMailLine } from 'react-icons/ri';
+
+// Move InputField outside the component to prevent re-creation on each render
+const InputField = ({ icon, type, placeholder, value, onChange, required = false }) => {
+	return (
+		<div className="relative mb-4">
+			<div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-gray-500">
+				{icon}
+			</div>
+			<input
+				type={type}
+				className="w-full pl-12 pr-4 py-3 bg-gray-50 border border-green-200 rounded-lg outline-green-300 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
+				placeholder={placeholder}
+				value={value}
+				onChange={onChange}
+				required={required}
+			/>
+		</div>
+	);
+};
 
 const Login = () => {
 	const [email, setEmail] = useState('');
@@ -46,24 +64,17 @@ const Login = () => {
 		}
 	};
 
-	// Input component for reusability
-	const InputField = ({ icon, type, placeholder, value, onChange, required = false }) => {
-		return (
-			<div className="relative mb-4">
-				<div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-gray-500">
-					{icon}
-				</div>
-				<input
-					type={type}
-					className="w-full pl-12 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
-					placeholder={placeholder}
-					value={value}
-					onChange={onChange}
-					required={required}
-				/>
-			</div>
-		);
-	};
+	// Create background circles array once to prevent re-creation on each render
+	const backgroundCircles = Array(6).fill().map((_, i) => ({
+		id: i,
+		width: Math.random() * 300 + 50,
+		height: Math.random() * 300 + 50,
+		top: Math.random() * 100,
+		left: Math.random() * 100,
+		xMovement: Math.random() * 50 - 25,
+		yMovement: Math.random() * 50 - 25,
+		duration: Math.random() * 10 + 10
+	}));
 
 	return (
 		<div className="min-h-screen flex items-center justify-center py-6 px-4 sm:px-6 lg:px-8 relative overflow-hidden"
@@ -72,24 +83,24 @@ const Login = () => {
 			}}>
 			{/* Animated background shapes */}
 			<div className="absolute w-full h-full overflow-hidden z-0">
-				{[...Array(6)].map((_, i) => (
+				{backgroundCircles.map((circle) => (
 					<motion.div
-						key={i}
+						key={circle.id}
 						className="absolute rounded-full opacity-20 bg-white"
 						style={{
-							width: `${Math.random() * 300 + 50}px`,
-							height: `${Math.random() * 300 + 50}px`,
-							top: `${Math.random() * 100}%`,
-							left: `${Math.random() * 100}%`,
+							width: `${circle.width}px`,
+							height: `${circle.height}px`,
+							top: `${circle.top}%`,
+							left: `${circle.left}%`,
 						}}
 						animate={{
-							x: [0, Math.random() * 50 - 25],
-							y: [0, Math.random() * 50 - 25],
+							x: [0, circle.xMovement],
+							y: [0, circle.yMovement],
 						}}
 						transition={{
 							repeat: Infinity,
 							repeatType: "reverse",
-							duration: Math.random() * 10 + 10,
+							duration: circle.duration,
 						}}
 					/>
 				))}
