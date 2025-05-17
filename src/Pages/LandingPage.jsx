@@ -119,7 +119,7 @@ function CivicSparkLandingPage() {
 						Focus On <br /> <span className="text-green-400">Empowerment</span> & <span className="text-green-400">Transparency</span>
 					</h1>
 
-					<div className="space-y-2 sm:space-y-0 sm:space-x-3 flex flex-col sm:flex-row justify-center lg:justify-start mb-6">
+					<div className="space-y-2 sm:space-y-0 sm:space-x-3 flex flex-col sm:flex-row justify-center lg:justify-start mb-2 lg:mb-6">
 						<button className="bg-green-500 hover:bg-green-600 text-white text-sm font-medium py-3 px-6 rounded-md transition duration-200">
 							Your Voice Sparks
 						</button>
