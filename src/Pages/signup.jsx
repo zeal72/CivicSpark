@@ -5,13 +5,15 @@ import {
 	signInWithPopup,
 	updateProfile
 } from 'firebase/auth';
-import { doc, setDoc } from 'firebase/firestore';
+import { ref, set } from 'firebase/database';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { motion } from 'framer-motion';
 import { FcGoogle } from 'react-icons/fc';
 import { RiLockPasswordLine, RiMailLine, RiUser3Line, RiBuilding4Line, RiTeamLine } from 'react-icons/ri';
+import Logo from '../assets/ABSG-Coat-of-Arms_Master 2.png'
+import LogoName from '../assets/logoname.png'
 
 // Move InputField outside the component to prevent re-creation on each render
 const InputField = ({ icon, type, placeholder, value, onChange, required = false }) => {
@@ -60,7 +62,8 @@ const SignUp = () => {
 				displayName: `${firstName} ${lastName}`
 			});
 
-			await setDoc(doc(db, 'users', user.uid), {
+			// Using Realtime Database instead of Firestore
+			await set(ref(db, `users/${user.uid}`), {
 				uid: user.uid,
 				firstName,
 				lastName,
@@ -97,7 +100,8 @@ const SignUp = () => {
 			const firstName = nameParts[0] || '';
 			const lastName = nameParts.slice(1).join(' ') || '';
 
-			await setDoc(doc(db, 'users', user.uid), {
+			// Using Realtime Database instead of Firestore
+			await set(ref(db, `users/${user.uid}`), {
 				uid: user.uid,
 				firstName,
 				lastName,
@@ -106,7 +110,7 @@ const SignUp = () => {
 				email: user.email,
 				provider: 'google',
 				createdAt: new Date().toISOString()
-			}, { merge: true }); // Merge with existing document if any
+			});
 
 			toast.success('Google signup successful!');
 			setTimeout(() => navigate('/home'), 1500);
@@ -178,10 +182,10 @@ const SignUp = () => {
 						<div className="relative z-10 h-full flex flex-col">
 							<div className="flex items-center space-x-3 mb-8">
 								<div className="h-12 w-12 rounded-full bg-white flex items-center justify-center">
-									<span className="text-green-600 font-bold text-xl">CS</span>
+									<span className="text-green-600 font-bold text-xl"><img src={Logo} alt="" /></span>
 								</div>
 								<h1 className="text-3xl font-bold text-white">
-									CIVIC<span className="text-yellow-300">SPARK</span>
+									<img src={LogoName} alt="" />
 								</h1>
 							</div>
 
