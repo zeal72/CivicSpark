@@ -11,7 +11,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { motion } from 'framer-motion';
 import { FcGoogle } from 'react-icons/fc';
-import { RiLockPasswordLine, RiMailLine, RiUser3Line, RiBuilding4Line, RiTeamLine } from 'react-icons/ri';
+import { RiLockPasswordLine, RiMailLine, RiUser3Line, RiBuilding4Line, RiTeamLine, RiImageAddLine, RiCloseLine } from 'react-icons/ri';
 import Logo from '../assets/ABSG-Coat-of-Arms_Master 2.png'
 import LogoName from '../assets/logoname.png'
 
@@ -34,6 +34,129 @@ const InputField = ({ icon, type, placeholder, value, onChange, required = false
 	);
 };
 
+// Profile Picture Upload Component
+const ProfilePictureUpload = ({ onImageUpload, uploadedImageUrl, isUploading }) => {
+	const [dragActive, setDragActive] = useState(false);
+	const [previewUrl, setPreviewUrl] = useState(uploadedImageUrl || null);
+
+	const handleDrag = (e) => {
+		e.preventDefault();
+		e.stopPropagation();
+		if (e.type === "dragenter" || e.type === "dragover") {
+			setDragActive(true);
+		} else if (e.type === "dragleave") {
+			setDragActive(false);
+		}
+	};
+
+	const handleDrop = (e) => {
+		e.preventDefault();
+		e.stopPropagation();
+		setDragActive(false);
+
+		if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+			handleFileSelect(e.dataTransfer.files[0]);
+		}
+	};
+
+	const handleFileSelect = (file) => {
+		if (file && file.type.startsWith('image/')) {
+			// Create preview
+			const reader = new FileReader();
+			reader.onload = (e) => {
+				setPreviewUrl(e.target.result);
+			};
+			reader.readAsDataURL(file);
+
+			// Upload to Cloudinary
+			onImageUpload(file);
+		} else {
+			toast.error('Please select a valid image file');
+		}
+	};
+
+	const handleFileInput = (e) => {
+		if (e.target.files && e.target.files[0]) {
+			handleFileSelect(e.target.files[0]);
+		}
+	};
+
+	const removeImage = () => {
+		setPreviewUrl(null);
+		onImageUpload(null);
+	};
+
+	return (
+		<div className="mb-6">
+			<label className="block text-sm font-medium text-gray-700 mb-2">
+				Profile Picture (Optional)
+			</label>
+
+			{previewUrl ? (
+				<motion.div
+					initial={{ opacity: 0, scale: 0.8 }}
+					animate={{ opacity: 1, scale: 1 }}
+					className="relative inline-block"
+				>
+					<div className="relative w-24 h-24 rounded-full overflow-hidden border-4 border-green-200 shadow-lg">
+						<img
+							src={previewUrl}
+							alt="Profile preview"
+							className="w-full h-full object-cover"
+						/>
+						{isUploading && (
+							<div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+								<svg className="animate-spin h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+									<circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+									<path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+								</svg>
+							</div>
+						)}
+					</div>
+					<button
+						type="button"
+						onClick={removeImage}
+						className="absolute -top-2 -right-2 w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center hover:bg-red-600 transition-colors"
+					>
+						<RiCloseLine className="w-4 h-4" />
+					</button>
+				</motion.div>
+			) : (
+				<div
+					className={`relative border-2 border-dashed rounded-xl p-6 text-center transition-all duration-200 cursor-pointer hover:border-green-400 hover:bg-green-50 ${dragActive ? 'border-green-500 bg-green-50' : 'border-gray-300'
+						}`}
+					onDragEnter={handleDrag}
+					onDragLeave={handleDrag}
+					onDragOver={handleDrag}
+					onDrop={handleDrop}
+					onClick={() => document.getElementById('profile-picture-input').click()}
+				>
+					<input
+						id="profile-picture-input"
+						type="file"
+						accept="image/*"
+						onChange={handleFileInput}
+						className="hidden"
+					/>
+
+					<motion.div
+						animate={{ y: dragActive ? -5 : 0 }}
+						transition={{ duration: 0.2 }}
+					>
+						<RiImageAddLine className="w-12 h-12 text-gray-400 mx-auto mb-3" />
+						<p className="text-gray-600 text-sm mb-2">
+							Drag & drop your photo here, or click to browse
+						</p>
+						<p className="text-gray-400 text-xs">
+							PNG, JPG, GIF up to 10MB
+						</p>
+					</motion.div>
+				</div>
+			)}
+		</div>
+	);
+};
+
 const SignUp = () => {
 	const [firstName, setFirstName] = useState('');
 	const [lastName, setLastName] = useState('');
@@ -41,8 +164,53 @@ const SignUp = () => {
 	const [group, setGroup] = useState('');
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
+	const [profileImageUrl, setProfileImageUrl] = useState('');
 	const [loading, setLoading] = useState(false);
+	const [imageUploading, setImageUploading] = useState(false);
 	const navigate = useNavigate();
+
+	// Cloudinary configuration - Replace with your actual values
+	const CLOUDINARY_CLOUD_NAME = "dx1vcdlqs"; // Replace with your cloud name
+	const CLOUDINARY_UPLOAD_PRESET = "CivicSpark"; // Replace with your upload preset
+
+	const uploadToCloudinary = async (file) => {
+		if (!file) {
+			setProfileImageUrl('');
+			return null;
+		}
+
+		setImageUploading(true);
+
+		try {
+			const formData = new FormData();
+			formData.append("file", file);
+			formData.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
+			formData.append("folder", "profile_pictures"); // Optional: organize in folders
+
+			const response = await fetch(
+				`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`,
+				{
+					method: "POST",
+					body: formData,
+				}
+			);
+
+			if (!response.ok) {
+				throw new Error('Upload failed');
+			}
+
+			const data = await response.json();
+			setProfileImageUrl(data.secure_url);
+			toast.success('Profile picture uploaded successfully!');
+			return data.secure_url;
+		} catch (error) {
+			console.error('Cloudinary upload error:', error);
+			toast.error('Failed to upload image. Please try again.');
+			return null;
+		} finally {
+			setImageUploading(false);
+		}
+	};
 
 	const handleSignUp = async (e) => {
 		e.preventDefault();
@@ -58,8 +226,10 @@ const SignUp = () => {
 			const userCredential = await createUserWithEmailAndPassword(auth, email, password);
 			const user = userCredential.user;
 
+			// Update profile with display name and photo URL
 			await updateProfile(user, {
-				displayName: `${firstName} ${lastName}`
+				displayName: `${firstName} ${lastName}`,
+				photoURL: profileImageUrl || null
 			});
 
 			// Using Realtime Database instead of Firestore
@@ -70,6 +240,7 @@ const SignUp = () => {
 				organization: organization || '',
 				group: group || '',
 				email: user.email,
+				photoURL: profileImageUrl || '',
 				provider: 'email',
 				createdAt: new Date().toISOString()
 			});
@@ -108,6 +279,7 @@ const SignUp = () => {
 				organization: '',
 				group: '',
 				email: user.email,
+				photoURL: user.photoURL || '',
 				provider: 'google',
 				createdAt: new Date().toISOString()
 			});
@@ -236,6 +408,13 @@ const SignUp = () => {
 							<p className="text-gray-600 mb-8">Fill in your details to get started</p>
 
 							<form onSubmit={handleSignUp} className="space-y-4">
+								{/* Profile Picture Upload */}
+								<ProfilePictureUpload
+									onImageUpload={uploadToCloudinary}
+									uploadedImageUrl={profileImageUrl}
+									isUploading={imageUploading}
+								/>
+
 								<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 									<InputField
 										icon={<RiUser3Line className="w-5 h-5" />}
@@ -303,8 +482,8 @@ const SignUp = () => {
 
 								<button
 									type="submit"
-									disabled={loading}
-									className="w-full flex items-center justify-center bg-green-600 hover:bg-green-700 focus:ring-4 focus:ring-green-300 text-white font-medium rounded-lg text-base px-5 py-3 transition-all duration-300"
+									disabled={loading || imageUploading}
+									className="w-full flex items-center justify-center bg-green-600 hover:bg-green-700 focus:ring-4 focus:ring-green-300 text-white font-medium rounded-lg text-base px-5 py-3 transition-all duration-300 disabled:opacity-50"
 								>
 									{loading ? (
 										<svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -312,7 +491,7 @@ const SignUp = () => {
 											<path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
 										</svg>
 									) : null}
-									{loading ? 'Creating Account...' : 'Create Account'}
+									{loading ? 'Creating Account...' : imageUploading ? 'Uploading Image...' : 'Create Account'}
 								</button>
 							</form>
 
