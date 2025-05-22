@@ -18,6 +18,7 @@ import FeedPanel from './Pages/Feed';
 import CivicSparkLandingPage from './Pages/LandingPage';
 import Login from './Pages/SignIn';
 import SignUp from './Pages/signup';
+import ProfilePage from './Pages/Profile';
 
 import { AuthProvider } from './Components/Context';
 import ProtectedRoute from './Components/protectedroutes';
@@ -75,6 +76,7 @@ function App() {
           <Route path="/sidebar" element={<ProtectedRoute><SidePanel /></ProtectedRoute>} />
           <Route path="/abiamap" element={<ProtectedRoute><Abiamap /></ProtectedRoute>} />
           <Route path="/feed" element={<ProtectedRoute><FeedPanel /></ProtectedRoute>} />
+          <Route path="/profile" element={<ProtectedRoute>< ProfilePage /></ProtectedRoute>} />
         </Routes>
       </Router>
     </AuthProvider>

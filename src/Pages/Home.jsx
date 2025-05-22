@@ -12,6 +12,7 @@ import IdeaBox from './IdeaBox';
 import Groups from './Groups';
 import Favourite from './Favourite';
 import Settings from './Settings';
+import ProfilePage from './Profile';
 import { Bot } from 'lucide-react';
 import Abiamap from './Abiamap';
 import CivicSparkLoader from '../Components/Loader';
@@ -60,7 +61,8 @@ const MainLayout = () => {
 			map: 'Abia State Map',
 			groups: 'Groups',
 			favorites: 'My Favorites',
-			settings: 'Settings'
+			settings: 'Settings',
+			profile: 'ProfilePage'
 		};
 
 		// Set loading message "Switching to [Tab Name]..."
@@ -169,6 +171,7 @@ const MainLayout = () => {
 							{activeTab === 'groups' && <Groups />}
 							{activeTab === 'favorites' && <Favourite />}
 							{activeTab === 'settings' && <Settings />}
+							{activeTab === 'profile' && <ProfilePage />}
 						</>
 					)}
 				</div>

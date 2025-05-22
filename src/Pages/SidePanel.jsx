@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { auth } from '../../Firebase.config'; // adjust path as needed
 import { onAuthStateChanged, signOut } from 'firebase/auth';
-import { useNavigate } from 'react-router-dom'; // Add this import
+import { Link, useNavigate } from 'react-router-dom'; // Add this import
 import PropTypes from 'prop-types';
 import defaultAvatar from '../assets/wisdom.png'; // fallback if no photoURL
 import { toast } from 'react-toastify';
@@ -62,6 +62,7 @@ const SidePanel = ({ onNavItemClick, activeTab, onLogout }) => {
 		{ id: 'groups', label: 'Groups', icon: <UsersIcon /> },
 		{ id: 'favorites', label: 'My Favorites', icon: <HeartIcon /> },
 		{ id: 'settings', label: 'Settings', icon: <SettingsIcon /> },
+		{ id: 'profile', label: 'Profile', icon: <SettingsIcon /> },
 	];
 
 	return (
@@ -80,9 +81,9 @@ const SidePanel = ({ onNavItemClick, activeTab, onLogout }) => {
 					<h3 className="font-medium text-sm">
 						{user?.displayName || 'Anonymous User'}
 					</h3>
-					<p className="text-xs text-gray-500 cursor-pointer hover:underline">
+					<Link to='/profile' className="text-xs text-gray-500 cursor-pointer hover:underline" >
 						View Profile
-					</p>
+					</Link>
 				</div>
 			</div>
 
@@ -142,7 +143,7 @@ const SidePanel = ({ onNavItemClick, activeTab, onLogout }) => {
 					)}
 				</button>
 			</div>
-		</div>
+		</div >
 	);
 };
 
