@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+// import UseNavigate from 'react-router-dom';
 import SidePanel from './SidePanel';
 import FeedPanel from './Feed';
 import RightPanel from './YouMightLike';
@@ -23,24 +24,6 @@ const MainLayout = () => {
 	const [activeTab, setActiveTab] = useState('feed');
 	const [loading, setLoading] = useState(false);
 	const [loadingMessage, setLoadingMessage] = useState('');
-
-	const handleLogout = async () => {
-		try {
-			// 1. Clear authentication state (tokens, user data)
-			localStorage.removeItem('authToken');
-			localStorage.removeItem('userData');
-			sessionStorage.clear();
-
-			// 3. Navigate to login page
-			navigate('/login');
-
-
-			return true; // Indicate successful logout
-		} catch (error) {
-			console.error('Logout failed:', error);
-			return false; // Indicate failed logout
-		}
-	};
 
 
 	useEffect(() => {
@@ -169,7 +152,6 @@ const MainLayout = () => {
 					<SidePanel
 						onNavItemClick={handleNavItemClick}
 						activeTab={activeTab}
-						onLogout={handleLogout}
 					/>
 				</div>
 

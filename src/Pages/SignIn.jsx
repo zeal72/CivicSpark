@@ -32,7 +32,7 @@ const InputField = ({ icon, type, placeholder, value, onChange, required = false
 const Login = () => {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
-	const [loading, setLoading] = useState(false);
+	const [loading, setLoading] = useState('');
 	const navigate = useNavigate();
 
 	const handleEmailLogin = async (e) => {
@@ -41,8 +41,10 @@ const Login = () => {
 
 		try {
 			await signInWithEmailAndPassword(auth, email, password);
-			toast.success('Login successful! Welcome back!');
-			setTimeout(() => navigate('/home'), 1500);
+			toast.success('Login successful! Welcome back!', {
+				autoClose: 1200,
+				onClose: () => navigate('/home') // Navigate after toast closes
+			});
 		} catch (error) {
 			console.error('Login error:', error);
 			toast.error(error.message.replace('Firebase: ', ''));
@@ -56,8 +58,10 @@ const Login = () => {
 
 		try {
 			await signInWithPopup(auth, provider);
-			toast.success('Google login successful!');
-			setTimeout(() => navigate('/home'), 1500);
+			toast.success('Google login successful!', {
+				autoClose: 1200,
+				onClose: () => navigate('/home') // Navigate after toast closes
+			});
 		} catch (error) {
 			console.error('Google login error:', error);
 			toast.error(error.message.replace('Firebase: ', ''));
@@ -65,7 +69,6 @@ const Login = () => {
 			setLoading(false);
 		}
 	};
-
 	// Create background circles array once to prevent re-creation on each render
 	const backgroundCircles = Array(6).fill().map((_, i) => ({
 		id: i,
@@ -83,6 +86,8 @@ const Login = () => {
 			style={{
 				background: "linear-gradient(135deg, #10b981 0%, #059669 35%, #065f46 100%)"
 			}}>
+
+			{/* Configure ToastContainer with better settings */}
 			{/* Animated background shapes */}
 			<div className="absolute w-full h-full overflow-hidden z-0">
 				{backgroundCircles.map((circle) => (
@@ -256,7 +261,6 @@ const Login = () => {
 					</div>
 				</div>
 			</motion.div>
-			<ToastContainer position="top-center" autoClose={3000} />
 		</div>
 	);
 };
